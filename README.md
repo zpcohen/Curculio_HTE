@@ -1,2 +1,6 @@
 # Curculio_HTE
 Scripts used to generate results for "Bacterial DNA infection triggers transposable element bursts and genome expansion"
+
+Abstract
+The mechanisms driving genome size variation in eukaryotes remain unresolved. Here, we identify a recurrent association between bacterial horizontal transfer (HT) and lineage-specific bursts of transposable element (TE) proliferation, which we define as genome infection. Using long-read sequencing and comparative pangenomic analyses across three species of the nut weevil genus, Curculio (Coleoptera: Curculionidae), we detect extensive bacterial-derived loci embedded within structurally dynamic genomic regions enriched for young TEs. These regions are dominated by a small number of proliferating TE families, including DNA/Maverick elements, which are highly enriched at HGT loci and associated with recent TE expansion in derived lineages. Analyses of codon usage, intron structure, and gene ontology (GO) suggest that transferred genes undergo early-stage domestication but are ultimately pseudogenized over evolutionary time. Together, these findings support a model in which episodic bacterial DNA infection triggers TE proliferation, driving transient genome expansion and restructuring that shape evolutionary trajectories.
+
