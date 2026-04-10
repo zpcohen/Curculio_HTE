@@ -115,3 +115,67 @@ for (p in seq_len(nperm)) {
 
 p_emp <- (1 + sum(null_scores >= obs_score, na.rm = TRUE)) / (nperm + 1)
 p_emp
+
+### TE permutation by 3 Ccb regions:
+
+library(dplyr)
+library(data.table)
+
+set.seed(1)
+
+chr_lengths <- c(
+  CM117440.1 = 299321432,   # C1
+  CM117442.1 = 261115320    # C3
+)
+
+obs <- data.table(
+  insert    = c("C1", "C3", "C3"),
+  chrom     = c("CM117440.1", "CM117442.1", "CM117442.1"),
+  win_start = c(134001568, 136515532, 137150885),   # real coordinates here
+  win_end   = c(134533379, 136849673, 137385348)    # real coordinates here
+)
+
+nperm <- 10000
+
+obs_gr <- GRanges(
+  seqnames = obs$chrom,
+  ranges = IRanges(start = obs$win_start, end = obs$win_end)
+)
+
+obs_counts_per_region <- countOverlaps(obs_gr, te_gr, ignore.strand = TRUE)
+
+sample_interval <- function(chr_len, insert_len) {
+  start <- sample.int(chr_len - insert_len + 1, 1)
+  end <- start + insert_len - 1
+  c(start = start, end = end)
+}
+null_totals <- numeric(nperm)
+
+obs[, len := win_end - win_start + 1]
+
+for (p in seq_len(nperm)) {
+  
+  perm_gr_list <- vector("list", nrow(obs))
+  
+  for (i in seq_len(nrow(obs))) {
+    x <- obs[i]
+    
+    chr_i <- as.character(x$chrom)
+    chr_len_i <- unname(chr_lengths[chr_i])
+    len_i <- as.numeric(x$len)
+    
+    pos <- sample_interval(chr_len = chr_len_i, insert_len = len_i)
+    
+    perm_gr_list[[i]] <- GRanges(
+      seqnames = chr_i,
+      ranges = IRanges(start = pos["start"], end = pos["end"])
+    )
+  }
+  
+  perm_gr <- do.call(c, perm_gr_list)
+  null_totals[p] <- sum(countOverlaps(perm_gr, te_gr, ignore.strand = TRUE))
+}
+
+p_emp_low <- (1 + sum(null_totals <= obs_total, na.rm = TRUE)) / (nperm + 1)
+
+
