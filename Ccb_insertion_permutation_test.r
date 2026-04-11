@@ -11,11 +11,11 @@ chr_lengths <- c(
 obs <- data.table(
   insert    = c("C1", "C3"),
   chrom     = c("CM117440.1", "CM117442.1"),
-  win_start = c(134001568, 136515532),   # real coordinates here
-  win_end   = c(134533379, 137385348)    # real coordinates here
+  win_start = c(134001568, 136515532),   # Ccb str coordinates from blast 
+  win_end   = c(134533379, 137385348)    # Ccb stp coordinates from blast
 )
 
-flank_bp <- 2000000   # example; replace with your actual flank size
+flank_bp <- 2000 
 nperm <- 10000
 
 sample_interval <- function(chr_len, insert_len, flank_bp) {
@@ -131,9 +131,8 @@ chr_lengths <- c(
 obs <- data.table(
   insert    = c("C1", "C3", "C3"),
   chrom     = c("CM117440.1", "CM117442.1", "CM117442.1"),
-  win_start = c(134001568, 136515532, 137150885),   # real coordinates here
-  win_end   = c(134533379, 136849673, 137385348)    # real coordinates here
-)
+  win_start = c(134001568, 136515532, 137150885),   
+  win_end   = c(134533379, 136849673, 137385348)   
 
 nperm <- 10000
 
