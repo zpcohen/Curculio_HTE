@@ -2,7 +2,7 @@
 
 ### identify_hits_by_window_Mar6.sh:
 
-WINLIST="CnanuMar6_99pc_csv"   # your CSV list
+WINLIST="CnanuMar6_90pc_csv"   # your CSV list
 TSV="C1_13_Feb26_input.tsv"
 
 while IFS=, read -r chr s e; do
