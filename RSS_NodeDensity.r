@@ -147,8 +147,47 @@ p <- ggplot() +
     panel.background = element_rect(fill = "white"),
     panel.border = element_rect(colour = "black",
                                 fill = NA,
-                                linewidth = 0.5)
-     
+                                linewidth = 0.5)     
 if (use_log) p <- p + scale_y_continuous(trans = "log1p", labels = comma)
 p <- p+ theme(aspect.ratio = 1)
 print(p)
+
+
+
+#### ID outliers by threshold:
+     qs <- df %>%
+  group_by(species_label) %>%
+  summarise(
+    p90 = quantile(PBSa_5Mb, 0.90, na.rm=TRUE),
+    p95 = quantile(PBSa_5Mb, 0.95, na.rm=TRUE),
+    p99 = quantile(PBSa_5Mb, 0.99, na.rm=TRUE),
+    .groups="drop"
+  )
+
+df_out <- df_out %>%
+  mutate(out90 = PBSa_5Mb >= p90)
+
+glandium_out90 <- df_out %>%
+  filter(species_label == "C. glandium", out90)
+
+view(caryae_out90)
+win_bp <- 5e6
+
+caryae_regions90 <- caryae_out90 %>%
+  arrange(chrom_num, win_start) %>%
+  group_by(chrom_num, chrom) %>%
+  mutate(new_block = win_start > lag(win_start, default = first(win_start)) + win_bp,
+         block_id  = cumsum(new_block)) %>%
+  group_by(chrom_num, chrom, block_id) %>%
+  summarise(
+    start_bp = min(win_start),
+    end_bp   = max(win_start),
+    start_Mb = start_bp / 1e6,
+    end_Mb   = end_bp / 1e6,
+    n_windows = n(),
+    max_PBSa = max(PBSa_5Mb),
+    .groups="drop"
+  )
+View(caryae_regions90)
+
+write.csv(caryae_out90, "/Users/zcohen5/Desktop/FAU_ZPC/Curculio_genomes/Ccaryae_node_dense_Mar6.tsv", row.names = FALSE)
