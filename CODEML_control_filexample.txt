@@ -1,0 +1,42 @@
+# fixed omega control:
+	seqfile =  query_307_HI_CCb_HGt_NT.fa-out.phy           * Path to the alignment file
+     treefile =  clean_prior.tree          * Path to the tree file
+      outfile = out_query_307_HI_CCb_HGt_NT.fa-out.phy_fixed_Omega.txt            * Path to the output file
+   
+        noisy = 3              * How much rubbish on the screen
+      verbose = 1              * More or less detailed report
+
+      seqtype = 1              * Data type
+        ndata = 1           * Number of data sets or loci
+        icode = 0              * Genetic code 
+    cleandata = 0              * Remove sites with ambiguity data?
+		
+        model = 2         * Models for ω varying across lineages
+	  NSsites = 2          * Models for ω varying across sites
+    CodonFreq = 7        * Codon frequencies
+	  estFreq = 0        * Use observed freqs or estimate freqs by ML
+        clock = 0          * Clock model
+    fix_omega = 1         * Estimate or fix omega
+        omega = 0.5        * Initial or fixed omega
+
+
+# varying omega test:
+	seqfile =  query_308_HI_CCb_HGt_NT.fa-out.phy           * Path to the alignment file
+     treefile =  clean_prior.tree          * Path to the tree file
+      outfile = out_query_308_HI_CCb_HGt_NT.fa-out.phy_branchsite_C1.txt            * Path to the output file
+   
+        noisy = 3              * How much rubbish on the screen
+      verbose = 1              * More or less detailed report
+
+      seqtype = 1              * Data type
+        ndata = 1           * Number of data sets or loci
+        icode = 0              * Genetic code 
+    cleandata = 0              * Remove sites with ambiguity data?
+		
+        model = 2         * Models for ω varying across lineages
+	  NSsites = 2          * Models for ω varying across sites
+    CodonFreq = 7        * Codon frequencies
+	  estFreq = 0        * Use observed freqs or estimate freqs by ML
+        clock = 0          * Clock model
+    fix_omega = 0         * Estimate or fix omega
+        omega = 0.5        * Initial or fixed omega
