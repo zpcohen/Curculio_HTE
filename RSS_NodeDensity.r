@@ -41,16 +41,17 @@ counts[, win_mid_Mb := (win_start + 0.5 * win_size) / 1e6]
 
 
 # ---- rolling 5×1Mb root-sum-of-squares (RSS) per species × chrom ----
-# trailing window: uses bins w, w-1, w-2, w-3, w-4  (total span 5 Mb)
+# trailing window: uses bins w, w-1, w-2, w+1, w+2  (total span 5 Mb)
 counts <- counts[
-  , PBSa_5Mb := slide_dbl(
+  , RSS_5Mb_centered := slide_dbl(
     n_nodes,
     ~ sqrt(sum((.x)^2)),
-    .before = 4, .after = 0, .complete = TRUE
+    .before = 2,
+    .after = 2,
+    .complete = TRUE
   ),
   by = .(sp_ABC, chrom)
 ]
-
 
 ##### ONE AXIS, ONE PLOT
 library(data.table)
